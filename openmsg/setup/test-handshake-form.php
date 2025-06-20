@@ -3,7 +3,7 @@
 
 // This page should be in the User's login protected area
 
-require ($_SERVER["DOCUMENT_ROOT"]."/openmsg/openmsg_settings.php");
+require "../openmsg_settings.php";
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
