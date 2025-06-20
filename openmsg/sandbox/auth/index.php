@@ -8,14 +8,13 @@ require "../openmsg_settings.php";
 $data = json_decode(file_get_contents("php://input"), true);
 
 $self_openmsg_address_id = $data["receiving_openmsg_address_id"]; 
-$self_openmsg_address_name = "YOUR Openmsg account name"; // grab this from the database belonging to user openmsg_address_id
 $pass_code = $data["pass_code"]; 
 $other_openmsg_address = $data["sending_openmsg_address"]; 
 $other_openmsg_address_name = $data["sending_openmsg_address_name"]; 
 $other_allows_replies = $data["sending_allow_replies"];
 
 
-function auth_check ($db, $self_openmsg_address_id, $self_openmsg_address_name, $pass_code, $other_openmsg_address, $other_openmsg_address_name, $other_allows_replies, $my_openmsg_domain, $sandbox_dir){
+function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_address, $other_openmsg_address_name, $other_allows_replies, $my_openmsg_domain, $sandbox_dir){
     // Verify the data received is present, else return an error
     if($self_openmsg_address_id == "" || $pass_code == "" || $other_openmsg_address == "" || $other_openmsg_address_name == "") {
         $response = array("error"=>TRUE, "error_message"=>"self_openmsg_address_id, pass_code, other_openmsg_address and other_openmsg_address_name cannot be blank :: $self_openmsg_address_id, $pass_code, $other_openmsg_address and $other_openmsg_address_name"); 
@@ -23,8 +22,18 @@ function auth_check ($db, $self_openmsg_address_id, $self_openmsg_address_name, 
     }
     
     $self_openmsg_address = $self_openmsg_address_id."*".$my_openmsg_domain;
+
+	// Query database to get name of user
+    $stmt = $db->prepare("SELECT self_openmsg_address_name FROM openmsg_users WHERE self_openmsg_address = ?");
+    $stmt->bind_param("s", $self_openmsg_address);
+    $stmt->execute(); // To Do: Un-comment
+    $stmt->store_result();
+    $stmt->bind_result($self_openmsg_address_name);
+    $stmt->fetch();
+    $matching_passCodes = $stmt->num_rows;
+    $stmt->close();
     
-    // To Do: Query database to check validity of pass_code / $openmsg_address_id combo
+    // Query database to check validity of pass_code / $openmsg_address_id combo
     $stmt = $db->prepare("SELECT UNIX_TIMESTAMP(timestamp) FROM openmsg_passCodes WHERE self_openmsg_address = ? AND pass_code = ?");
     $stmt->bind_param("ss", $self_openmsg_address, $pass_code);
     $stmt->execute(); // To Do: Un-comment
@@ -144,7 +153,7 @@ function auth_check ($db, $self_openmsg_address_id, $self_openmsg_address_name, 
     }
 }
 
-$response = auth_check ($db, $self_openmsg_address_id, $self_openmsg_address_name, $pass_code, $other_openmsg_address, $other_openmsg_address_name, $other_allows_replies, $my_openmsg_domain, $sandbox_dir); // $db = database connection
+$response = auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_address, $other_openmsg_address_name, $other_allows_replies, $my_openmsg_domain, $sandbox_dir); // $db = database connection
 echo json_encode($response);  
 
 ?>
