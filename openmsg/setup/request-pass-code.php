@@ -7,7 +7,7 @@ exit();
 
 require ($_SERVER["DOCUMENT_ROOT"]."/openmsg/openmsg_settings.php");
 
-$self_openmsg_address = "1000000*".$my_openmsg_domain; // Greb the Openmsg address for the logged in user who wants the code.
+$self_openmsg_address = "1000000*".$my_openmsg_domain; // Grab the Openmsg address for the logged in user who wants the code.
 
 function generateRandomString($length = 6) {
 	$characters = '0123456789';
