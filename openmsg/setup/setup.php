@@ -25,13 +25,13 @@ for($i = 0; $i < 2; $i++){
 	$testAcc_salt = rand(99999,9999999); // Note this is for the test account only. Not secure.
 	$testAcc_pw_hash = hash('sha256', $testAcc_pw.$testAcc_1_salt); // Note this is for the test account only. Not secure.
 	$stmt -> bind_param("ssss", $testAcc_address, $testAcc_address_name, $testAcc_pw_hash, $testAcc_salt);
-	//$stmt->execute(); // To Do: Un-comment
+	$stmt->execute(); 
 }
 $stmt->close();
 
 
 $stmt = $db->prepare("SELECT UNIX_TIMESTAMP(timestamp) FROM openmsg_handshakes");
-    $stmt->execute();  // To Do: Un-comment
+    //$stmt->execute();  // To Do: Un-comment
     $stmt->store_result();
     $stmt->bind_result($initation_timestamp);
     $stmt->fetch();
@@ -52,7 +52,7 @@ pass_code  VARCHAR(6) NOT NULL,
 timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $stmt = $db->prepare($query);
-$stmt->execute(); // To Do: Un-comment
+$stmt->execute(); 
 $stmt->close();
 
 
@@ -69,7 +69,7 @@ message_crypt_key VARCHAR(64) NOT NULL,
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $stmt = $db->prepare($query);
-$stmt->execute(); // To Do: Un-comment
+$stmt->execute(); 
 $stmt->close();
 
 
@@ -85,7 +85,7 @@ message_text VARCHAR(2000) NOT NULL,
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $stmt = $db->prepare($query);
-$stmt->execute(); // To Do: Un-comment
+$stmt->execute(); 
 $stmt->close();
 
 
@@ -100,7 +100,7 @@ timestamp_read INT(12),
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $stmt = $db->prepare($query);
-$stmt->execute(); // To Do: Un-comment
+$stmt->execute(); 
 $stmt->close();
 
 
