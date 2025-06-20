@@ -1,5 +1,6 @@
 # version_1.0
 
+Visit https://www.openmsg.io
 Visit https://www.openmsg.io/docs/ for integration guides
 
 # Openmsg: The spam free, open messaging protocol
