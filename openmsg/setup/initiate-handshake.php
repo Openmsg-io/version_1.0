@@ -59,7 +59,7 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	// ##### Start CURL request ##### 
 	// The url is created from the domain in the Openmsg address 
 	$url = "https://".$other_openmsg_address_domain."/openmsg".$sandbox_dir."/auth/"; 
-	echo $url;
+
 	// JSON data
 	$data = 
 		array(
