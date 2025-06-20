@@ -2,6 +2,7 @@
 
 Visit https://www.openmsg.io
 Visit https://www.openmsg.io/docs/ for integration guides
+Contact: https://www.openmsg.io/pages/contact/ >> My Openmsg address: 1*openmsg.io
 
 # Openmsg: The spam free, open messaging protocol
 Openmsg was built as an alternative to email by someone who was fed up of spam. It is an open, cross-platform, decentralized messaging protocol that anyone can implement. All you need is a domain name and a database. Developers can build their own clients and servers in any programming language.
@@ -32,3 +33,5 @@ Tweak the configuration to match your server settings.
 If you're not using PHP, the provided code can be used as a reference and easily adapted to any programming language.
 Get Started
 Take a look at the Overview and then the Setup guide
+
+Openmsg Addresses are formatted as a numeric ID, an asterix, then domain, like so: 0672534*domain.com
