@@ -104,7 +104,7 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	if(!($auth_code = $response["auth_code"])) return("Error: Missing auth_code in response (CxMBc)");
 	if(!($ident_code = $response["ident_code"])) return("Error: Missing ident_code in response (BC2Lm)");
 	if(!($message_crypt_key = $response["message_crypt_key"])) return("Error: Missing message_crypt_key in response (nEG5M)");
-	if(!($other_openmsg_address_name = $response["other_openmsg_address_name"])) return("Error: Missing other_openmsg_address_name in response (92Apb)");
+	if(!($other_openmsg_address_name = $response["receiving_openmsg_address_name"])) return("Error: Missing other_openmsg_address_name in response (92Apb)");
 	
     $other_acceptsMessages = TRUE;
 	
