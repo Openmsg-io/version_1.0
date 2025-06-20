@@ -7,6 +7,7 @@ exit();
 
 require ($_SERVER["DOCUMENT_ROOT"]."/openmsg/openmsg_settings.php");
 
+// The below values are for testing only
 $message_text = "Hello Openmsg user!"; // message to be sent
 $sending_openmsg_address = "1000000*".$my_openmsg_domain; // To Do: Enter the from address for the Sending Node
 $receiving_openmsg_address = "1000001*".$my_openmsg_domain; // To Do: The address where the message is being sent to
