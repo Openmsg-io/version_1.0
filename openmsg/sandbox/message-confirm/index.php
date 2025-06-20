@@ -2,7 +2,7 @@
 // ##### See: openmsg.io/docs/v1
 
 
-require ($_SERVER["DOCUMENT_ROOT"]."/openmsg/openmsg_settings.php");
+require "../openmsg_settings.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 $message_hash = $data["message_hash"]; 
