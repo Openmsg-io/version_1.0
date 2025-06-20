@@ -125,5 +125,10 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	
 }
 $response = initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openmsg_address, $self_openmsg_address_name, $self_allow_replies, $my_openmsg_domain, $sandbox_dir);
-echo "Response: ".$response;
+if($response == "Success"){
+	echo "Connected. You can now message us: ".$self_openmsg_address;
+	//echo "Connected. You are now subsribed for updates about your order."; // Show an appropriate response
+}else{
+	echo "Error: ".$response;
+}
 ?>
