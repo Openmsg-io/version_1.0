@@ -17,7 +17,7 @@ self_openmsg_address,
 self_openmsg_address_name,
 password,
 password_salt) VALUES (?, ?, ?, ?)";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 for($i = 0; $i < 2; $i++){
 	$testAcc_address = $i."*".$my_openmsg_domain;
 	$testAcc_address_name = "Test Openmsg Account";
@@ -30,7 +30,7 @@ for($i = 0; $i < 2; $i++){
 $stmt->close();
 
 
-$stmt = $DB_conn->prepare("SELECT UNIX_TIMESTAMP(timestamp) FROM openmsg_handshakes");
+$stmt = $db->prepare("SELECT UNIX_TIMESTAMP(timestamp) FROM openmsg_handshakes");
     $stmt->execute();  // To Do: Un-comment
     $stmt->store_result();
     $stmt->bind_result($initation_timestamp);
@@ -51,7 +51,7 @@ other_openmsg_address VARCHAR(255) NOT NULL,
 pass_code  VARCHAR(6) NOT NULL,
 timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
@@ -68,7 +68,7 @@ ident_code VARCHAR(64) NOT NULL,
 message_crypt_key VARCHAR(64) NOT NULL,
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
@@ -84,7 +84,7 @@ message_nonce VARCHAR(32) NOT NULL,
 message_text VARCHAR(2000) NOT NULL,
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
@@ -99,7 +99,7 @@ message_text VARCHAR(2000) NOT NULL,
 timestamp_read INT(12),
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
@@ -114,7 +114,7 @@ self_openmsg_address VARCHAR(255) NOT NULL,
 pass_code  VARCHAR(6) NOT NULL,
 timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
@@ -128,7 +128,7 @@ message_hash VARCHAR(64) NOT NULL,
 message_text VARCHAR(2000) NOT NULL,
 timestamp_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
-$stmt = $DB_conn->prepare($query);
+$stmt = $db->prepare($query);
 $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
