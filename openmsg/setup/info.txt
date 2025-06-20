@@ -1,0 +1,5 @@
+This is where the setup files and test files are stored. 
+
+It is advisable to protect this folder against unatherized access as the setup file and the test files will make changes to your database and allow anyone accessing them to send messages.
+
+The test files such as "initiate-handshake.php" contains the code to allow users to connect and send messages and will need integrating into a user's account.
