@@ -3,7 +3,7 @@
 
 // enter your domain here. This needs to be the domain used in your account addresses and where the /openmsg/ protocol folder is hosted
 $my_openmsg_domain = "enter_your_domain_in_settings_file.com"; 
-$sandbox = TRUE;
+$sandbox = FALSE;
 if($sandbox == TRUE) $sandbox_dir = "/sandbox";
 
 // Connect to your database
