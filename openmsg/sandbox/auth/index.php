@@ -1,7 +1,7 @@
 <?php
 // ##### See: openmsg.io/docs/v1
 
-require ($_SERVER["DOCUMENT_ROOT"]."/openmsg/openmsg_settings.php");
+require "../openmsg_settings.php";
 
 // To Do: $my_openmsg_domain needs to be filled in with your actual domain name in the openmsg_settings.php file
 
