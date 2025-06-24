@@ -2,6 +2,7 @@
 
 Visit https://www.openmsg.io
 Visit https://www.openmsg.io/docs/ for integration guides
+
 Contact: https://www.openmsg.io/pages/contact/ >> My Openmsg address: 1*openmsg.io
 
 # Openmsg: The spam free, open messaging protocol
