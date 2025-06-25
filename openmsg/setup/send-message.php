@@ -31,10 +31,15 @@ function send_message($db, $message_text, $sending_openmsg_address, $receiving_o
 	$receiving_openmsg_address_id = explode("*", $receiving_openmsg_address)[0]; 
 	$receiving_openmsg_address_domain = explode("*", $receiving_openmsg_address)[1]; 
 	
-	$message_nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
-	$message_nonce_encoded = base64_encode($message_nonce);
-	$message_encrypted = sodium_crypto_secretbox($message_text, $message_nonce, sodium_hex2bin($message_crypt_key));
-	$message_package = base64_encode($message_nonce . $message_encrypted);
+	    $message_nonce = random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES);
+	    $message_nonce_encoded = sodium_bin2base64(
+	        $message_nonce, SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING
+	    );
+	    $message_encrypted = sodium_crypto_secretbox($message_text, $message_nonce, sodium_hex2bin($message_crypt_key));
+	    $message_package = sodium_bin2base64(
+	        $message_nonce . $message_encrypted,
+	        SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING
+	    );
 	
 	$message_salt = bin2hex(random_bytes(16));
 	$message_timestamp = time();  
