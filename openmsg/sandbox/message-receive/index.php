@@ -64,11 +64,15 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
     
 	
     // Decode the message package
-    $message_package_decoded = base64_decode($message_package);
+    $message_package_decoded = sodium_base642bin(
+        $message_package, SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING
+    );
 	
     // Split the package into nonce and ciphertext
     $message_nonce = mb_substr($message_package_decoded, 0, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, "8bit");
-	$message_nonce_encoded = base64_encode($message_nonce);
+	$message_nonce_encoded = sodium_bin2base64(
+        $message_nonce, SODIUM_BASE64_VARIANT_URLSAFE_NO_PADDING
+    );
     $message_encrypted = mb_substr($message_package_decoded, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES, null, "8bit");
     
     // ##### Start CURL request #####
