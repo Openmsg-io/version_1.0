@@ -45,7 +45,7 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
     if(!$auth_code || !$ident_code || !$message_crypt_key || !$sending_openmsg_address) { 
         // If the database doesnt contain an ident_code / openmsg_address_id combo
           // or there are other errors then return error and error_message
-        $response = array("error"=>TRUE, "response_code"=>"SM_E001", "error_message"=>"Could not find user::: $receiving_openmsg_address (rB6Xl)"); 
+        $response = array("error"=>TRUE, "response_code"=>"SM_E001", "error_message"=>"No matching connection between these two users $sending_openmsg_address and $receiving_openmsg_address (rB6Xl)"); 
         return($response);
     }
 	
