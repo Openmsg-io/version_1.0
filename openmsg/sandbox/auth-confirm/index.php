@@ -6,7 +6,7 @@ require "../openmsg_settings.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$other_openmsg_address = $data["other_openmsg_address"]; 
+$other_openmsg_address = $data["receiving_openmsg_address"]; 
 $pass_code = $data["pass_code"]; 
 
 
