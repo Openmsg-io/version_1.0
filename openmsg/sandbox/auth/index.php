@@ -81,7 +81,7 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
     // JSON data
     $data = 
         array(
-          "other_openmsg_address" => $self_openmsg_address_id."*".$my_openmsg_domain, 
+          "receiving_openmsg_address" => $self_openmsg_address_id."*".$my_openmsg_domain, 
           "pass_code" => $pass_code
        );
     $data = json_encode($data);
