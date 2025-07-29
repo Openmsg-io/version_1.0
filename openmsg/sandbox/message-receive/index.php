@@ -26,7 +26,7 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
 	 if(!$receiving_openmsg_address_id || !$ident_code || !$message_package || !$message_hash || !$message_salt || !$message_timestamp || !$my_openmsg_domain) { 
         // If the database doesnt contain an ident_code / openmsg_address_id combo
           // or there are other errors then return error and error_message
-        $response = array("error"=>TRUE, "response_code"=>"SM_E000", "error_message"=>"Missing data (wMv4J)"); 
+        $response = array("error"=>TRUE, "response_code"=>"SM_E000", "error_code"=>"message_data_missing", "error_message"=>"Missing data (wMv4J)"); 
         return($response);
     }
 	
@@ -45,7 +45,7 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
     if(!$auth_code || !$ident_code || !$message_crypt_key || !$sending_openmsg_address) { 
         // If the database doesnt contain an ident_code / openmsg_address_id combo
           // or there are other errors then return error and error_message
-        $response = array("error"=>TRUE, "response_code"=>"SM_E001", "error_message"=>"No matching connection between these two users $sending_openmsg_address and $receiving_openmsg_address (rB6Xl)"); 
+         $response = array("error"=>TRUE, "response_code"=>"SM_E001", "error_code"=>"ident_code_invalid", "error_message"=>"No matching connection between these two users $sending_openmsg_address and $receiving_openmsg_address (rB6Xl)"); 
         return($response);
     }
 	
@@ -55,12 +55,12 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
 
     //Check the hash is valid
     $message_hash_test = hash("sha256", $message_package.$auth_code.$message_salt.$message_timestamp);
-    if($message_hash!=$message_hash_test) return (array("error"=>TRUE, "response_code"=>"SM_E004", "error_message"=>"There was an error with the authorization (4NxWV)"));
+    if($message_hash!=$message_hash_test) return (array("error"=>TRUE, "response_code"=>"SM_E004", "error_code"=>"message_hash_invalid", "error_message"=>"There was an error with the authorization (4NxWV)"));
     
 	
 	
     $message_hash_expiry_seconds = 60;
-    if(($message_timestamp+$message_hash_expiry_seconds) < time()) return (array("error"=>TRUE, "response_code"=>"SM_E005", "error_message"=>"Hash is too old (kmqVE)"));
+    if(($message_timestamp+$message_hash_expiry_seconds) < time()) return (array("error"=>TRUE, "response_code"=>"SM_E005", "error_code"=>"message_expired", "error_message"=>"Hash is too old (kmqVE)"));
     
 	
     // Decode the message package
@@ -131,7 +131,7 @@ function message_check ($db, $receiving_openmsg_address_id, $ident_code, $messag
     // Now attempt to decrypt the message
     $message_decrypted = sodium_crypto_secretbox_open($message_encrypted, $message_nonce, sodium_hex2bin($message_crypt_key));
     if ($message_decrypted === false) {
-        return(array("error"=>TRUE, "response_code"=>"SM_E005", "error_message"=>"Invalid key or corrupt message (QctWn)")); 
+        return(array("error"=>TRUE, "response_code"=>"SM_E006", "error_code"=>"message_decryption_error", "error_message"=>"Invalid key or corrupt message (QctWn)")); 
     }
     
 	$message_text = $message_decrypted;
