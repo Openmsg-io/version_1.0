@@ -12,7 +12,7 @@ $message_nonce = $data["message_nonce"];
 function message_confirm ($db, $message_hash, $message_nonce){
     // Query database table "outbox" to check for a pending outgoing message that matches message_hash, message_nonce and message_timestamp that hasnt expired. The outbox message should expire after 60 seconds.
 	if(!$message_hash || !$message_nonce){
-		$response = array("error"=>TRUE, "response_code"=>"SM_E003", "error_message"=>"Missing message_hash or message_nonce (qUfd6)"); 
+		$response = array("error"=>TRUE, "response_code"=>"SM_E000", "error_code"=>"message_data_missing", "error_message"=>"Missing message_hash or message_nonce (qUfd6)"); 
         return($response);
 	}
 	
@@ -25,7 +25,7 @@ function message_confirm ($db, $message_hash, $message_nonce){
     $stmt->close();
    	if($matching_messages == 0) { 
         // If there are errors then return error and error_message
-        $response = array("error"=>TRUE, "response_code"=>"SM_E003", "error_message"=>"unknown pending message (poyQ2)"); 
+        $response = array("error"=>TRUE, "response_code"=>"SM_E003", "error_code"=>"message_unknown", "error_message"=>"Unknown Message. No outgoing message matching these details or message was sent from an unauthorized domain domain. (poyQ2)");  
         return($response);
    	}
 	
