@@ -24,7 +24,7 @@ function send_message($db, $message_text, $sending_openmsg_address, $receiving_o
     $stmt->close();
 	
 	if(!($matching_connections > 0 && $auth_code && $ident_code && $message_crypt_key)){
-		$response = array("error"=>TRUE, "error_message"=>"No matching connection between these two users $sending_openmsg_address, $receiving_openmsg_address (Qmyxm)", "response_code"=>""); 
+		$response = array("error"=>TRUE, "response_code"=>"SM_E001", "error_code"=>"ident_code_invalid", "error_message"=>"No matching connection between these two users $sending_openmsg_address, $receiving_openmsg_address (Qmyxm)"); 
         return($response);
 	}
 	
@@ -125,17 +125,24 @@ function send_message($db, $message_text, $sending_openmsg_address, $receiving_o
 $response = send_message($db, $message_text, $sending_openmsg_address, $receiving_openmsg_address, $sandbox_dir);
 echo print_r($response);
 /*
-Response codes:
-SM_S888 = success, message accepted and delivered
-
 Errors:
-SM_E000 = unknown error
-SM_E001 = user not known
-SM_E002 = sender not authorized
-SM_E003 = message did not originate from correct domain
-SM_E004 = could not recreate hash // auth_code mismatch, assuming message_timestamp and message_package were sent correctly
-SM_E005 = hash expired
-SM_E005 = could not decrypt message // message_key mismatch, assuming nonce was sent correctly
+error = TRUE
+response_code | error_code | Plain Text
+SM_E000 | unknown_error | message_data_missing | unknown error // Other error
+SM_E001 | ident_code_invalid | user not known
+SM_E002 | message_rejected_byuser | This address does not accept incomming messages // (Can be used for noreply addresses or as a quiet way for a User to block a sender)
+SM_E003 | message_unknown | Unknown Message. No outgoing message matching these details or message was sent from an unauthorized domain domain.
+SM_E004 | message_hash_invalid | could not recreate hash - auth_code mismatch, assuming message_timestamp and message_package were sent correctly
+SM_E005 | message_expired | Message sent over 60 seconds ago. Expired message request. 
+SM_E006 | message_decryption_error | The message decryption failed. Encryption key mis-match or corrupt message, assuming nonce was sent correctly
+SM_E007 | message_nonce_error | This message encryption nonce has been used before for this connection
+SM_E008 | message_rejected_temp | Message rejected temporary - server is being maintained
+SM_E009 | message_rejected_perm | Message rejected permanently (service has closed down, messages from sending domain or IP address are blocked)
+
+Success:
+success = TRUE
+response_code | Plain Text
+SM_S888 | Message received successfully and accepted
 */
 
 ?>
