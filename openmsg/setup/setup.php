@@ -15,7 +15,7 @@ require ($_SERVER['DOCUMENT_ROOT'].'/openmsg/openmsg_settings.php');
 $query = "CREATE TABLE IF NOT EXISTS openmsg_users (
 id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 self_openmsg_address VARCHAR(255) NOT NULL,
-self_openmsg_name VARCHAR(40) NOT NULL,
+self_openmsg_address_name VARCHAR(40) NOT NULL,
 password CHAR(255) NOT NULL,
 password_salt CHAR(30) NOT NULL, 
 timestamp_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -28,7 +28,7 @@ $stmt->close();
 // Create two test accounts... delete rows from table after testing.
 $query = "INSERT INTO openmsg_users (
 self_openmsg_address, 
-self_openmsg_name,
+self_openmsg_address_name,
 password,
 password_salt) VALUES (?, ?, ?, ?)";
 $stmt = $db->prepare($query);
@@ -136,6 +136,7 @@ $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
 ?>
+
 
 
 
