@@ -33,7 +33,7 @@ password,
 password_salt) VALUES (?, ?, ?, ?)";
 $stmt = $db->prepare($query);
 for($i = 0; $i < 2; $i++){
-	$testAcc_address = $i."*".$my_openmsg_domain;
+	$testAcc_address = "100000".$i."*".$my_openmsg_domain;
 	$testAcc_address_name = "Test Openmsg Account";
 	$testAcc_pw = rand(99999,9999999); // Note this is for the test account only. Not secure.
 	$testAcc_salt = rand(99999,9999999); // Note this is for the test account only. Not secure.
@@ -136,5 +136,6 @@ $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
 ?>
+
 
 
