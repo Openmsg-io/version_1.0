@@ -93,7 +93,6 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	}
 	
 	$response = json_decode($response, true);
-	curl_close($curl); 
 	
 	// Check for errors
 	if($err = curl_error($curl)) return("Error. Curl error: ".$err);
@@ -106,6 +105,7 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	if(!($message_crypt_key = $response["message_crypt_key"])) return("Error: Missing message_crypt_key in response (nEG5M)");
 	if(!($other_openmsg_address_name = $response["receiving_openmsg_address_name"])) return("Error: Missing other_openmsg_address_name in response (92Apb)");
 	
+	curl_close($curl); 
     $other_acceptsMessages = TRUE;
 	
 	// Delete any previous connections between these two users so they only have one connection at a time.
@@ -132,3 +132,4 @@ if($response == "Success"){
 	echo "Error: ".$response;
 }
 ?>
+
