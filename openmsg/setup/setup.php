@@ -28,7 +28,7 @@ $stmt->close();
 // Create two test accounts... delete rows from table after testing.
 $query = "INSERT INTO openmsg_users (
 self_openmsg_address, 
-self_openmsg_address_name,
+self_openmsg_name,
 password,
 password_salt) VALUES (?, ?, ?, ?)";
 $stmt = $db->prepare($query);
@@ -136,4 +136,5 @@ $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
 ?>
+
 
