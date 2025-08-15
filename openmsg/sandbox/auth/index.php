@@ -109,7 +109,6 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
 	}
 	
 	$response = json_decode($response, true);
-	curl_close($curl);  
 	
     // Check for errors
     if($err = curl_error($curl)) return(array("error"=>TRUE, "error_message"=>"Error. Curl error: ".$err));
@@ -117,6 +116,7 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
 	if($response["error"]) return(array("error"=>TRUE, "error_message"=>"Error: ".$response["error_message"]));
 	if(($success = $response["success"]) != TRUE) return(array("error"=>TRUE, "error_message"=>"Error: Unsuccessful from /auth/"));
     
+	curl_close($curl);  
     
     if(!$error){
 		
@@ -157,3 +157,4 @@ $response = auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openms
 echo json_encode($response);  
 
 ?>
+
