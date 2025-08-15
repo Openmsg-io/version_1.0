@@ -11,6 +11,20 @@ include ($_SERVER['DOCUMENT_ROOT'].'/includes/main.php');
 
 require ($_SERVER['DOCUMENT_ROOT'].'/openmsg/openmsg_settings.php');
 
+// Table to save User account data. You will need to add to this table 
+$query = "CREATE TABLE IF NOT EXISTS openmsg_users (
+id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+self_openmsg_address VARCHAR(255) NOT NULL,
+self_openmsg_name VARCHAR(40) NOT NULL,
+password CHAR(255) NOT NULL,
+password_salt CHAR(30) NOT NULL, 
+timestamp_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+$stmt = $db->prepare($query);
+$stmt->execute(); // To Do: Un-comment
+$stmt->close();
+
+
 // Create two test accounts... delete rows from table after testing.
 $query = "INSERT INTO openmsg_users (
 self_openmsg_address, 
@@ -30,18 +44,7 @@ for($i = 0; $i < 2; $i++){
 $stmt->close();
 
 
-$stmt = $db->prepare("SELECT UNIX_TIMESTAMP(timestamp) FROM openmsg_handshakes");
-    //$stmt->execute();  // To Do: Un-comment
-    $stmt->store_result();
-    $stmt->bind_result($initation_timestamp);
-    $stmt->fetch();
-    $matching_handshakes = $stmt->num_rows;
-    $stmt->close();
-	echo $initation_timestamp;
-if($initation_timestamp < time()-2000){
-	echo "OLD";
-}
-echo " - ".$matching_handshakes;
+
 
 
 // Table to track handshakes that are in progress
@@ -133,3 +136,4 @@ $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
 ?>
+
