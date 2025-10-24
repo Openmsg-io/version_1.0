@@ -7,11 +7,11 @@ $my_openmsg_domain = "enter_your_domain_in_settings_file.com";
 $sandbox = TRUE;
 if($sandbox == TRUE) $sandbox_dir = "/sandbox";
 
-// Connect to your database
+// Connect to your database // Example only ... Please dont really store your DB details here...!
 /*
 $DBhost = "localhost";
 $DBuser = "username";
-$DBpass = "password";
+$DBpass = "password"; // Please dont really store your DB password here...!
 $DBName = "myDB";
 
 $db = new mysqli($DBhost,$DBuser,$DBpass,$DBName);
@@ -25,6 +25,7 @@ OR:
 */
 
 require ($_SERVER["DOCUMENT_ROOT"]."/includes/test_database_connection.php"); // Delete or replace with database connection file
+
 
 
 
