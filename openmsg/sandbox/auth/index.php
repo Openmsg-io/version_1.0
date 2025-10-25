@@ -119,9 +119,15 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
 	curl_close($curl);  
     
     if(!$error){
-		
+
+		// Check if a connection exists between these users already, and get the ident_code
+        $query = "SELECT ident_code FROM openmsg_user_connections WHERE self_openmsg_address = ? AND other_openmsg_address = ? LIMIT 1";
+        $result = $db->execute_query($query, [$self_openmsg_address, $other_openmsg_address]);
+        $row = $result->fetch_assoc();
+        if($row) $ident_code = $row["ident_code"];
+        
         $auth_code = bin2hex(random_bytes(32));  
-        $ident_code = bin2hex(random_bytes(32)); 
+        if(!$ident_code) $ident_code = bin2hex(random_bytes(32)); // Dont overwrite the ident_code if one already exists.
         $message_crypt_key = sodium_bin2hex(sodium_crypto_secretbox_keygen());
 		
 		// Delete any previous connections between these two users so they only have one connection at a time.
@@ -157,4 +163,5 @@ $response = auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openms
 echo json_encode($response);  
 
 ?>
+
 
