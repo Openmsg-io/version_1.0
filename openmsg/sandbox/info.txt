@@ -1,1 +1,0 @@
-This is the sandbox folder. Once you have tested the protocol you can move the contents of folder "/openmsg/sandbox/" to "/openmsg/". Dont forget to update the settings file.
