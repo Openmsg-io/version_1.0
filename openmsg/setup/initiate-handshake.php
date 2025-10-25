@@ -107,6 +107,14 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 	
 	curl_close($curl); 
     $other_acceptsMessages = TRUE;
+
+	$query = "SELECT ident_code FROM openmsg_user_connections WHERE self_openmsg_address = ? AND other_openmsg_address = ? LIMIT 1";
+	$result = $db->execute_query($query, [$self_openmsg_address, $other_openmsg_address]);
+	$row = $result->fetch_assoc();
+	if($row) {
+		if(($ident_code != $row["ident_code"])) return("Error: Cant replace ident_code (BC2Lm)");
+		$ident_code = $row["ident_code"];
+	}
 	
 	// Delete any previous connections between these two users so they only have one connection at a time.
 	$stmt = $db->prepare("DELETE FROM openmsg_user_connections WHERE self_openmsg_address = ? AND other_openmsg_address = ?");
@@ -132,4 +140,5 @@ if($response == "Success"){
 	echo "Error: ".$response;
 }
 ?>
+
 
