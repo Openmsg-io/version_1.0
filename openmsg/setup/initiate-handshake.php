@@ -46,11 +46,13 @@ function initiate_handshake($db, $other_openmsg_address, $pass_code, $self_openm
 		return("openmsg_address_domain not valid $other_openmsg_address_domain (D8hgB)");
 	}
 	
-	// Store other_openmsg_address and pass_code temporarily in a separate table "openmsg_handshakes" with a short expiry timestamp (60 seconds)
+    $passcode_hash = hash("sha256", $pass_code.$self_openmsg_address.$other_openmsg_address);
+	
+	// Store other_openmsg_address and passcode_hash temporarily in a separate table "openmsg_handshakes" with a short expiry timestamp (60 seconds)
 	  // to make note of a pending Authorization Request as it will be used by the Receiving Node to confirm that the request
 	  // originated from the same domain as the domain in other_openmsg_address.
-	$stmt = $db->prepare("INSERT INTO openmsg_handshakes (other_openmsg_address, pass_code) VALUES (?, ?)");
-	$stmt->bind_param("ss", $other_openmsg_address, $pass_code);
+	$stmt = $db->prepare("INSERT INTO openmsg_handshakes (other_openmsg_address, passcode_hash) VALUES (?, ?)");
+	$stmt->bind_param("ss", $other_openmsg_address, passcode_hash);
 	$stmt->execute(); // To Do: Un-comment
 	$stmt->close();
 	
@@ -140,5 +142,6 @@ if($response == "Success"){
 	echo "Error: ".$response;
 }
 ?>
+
 
 
