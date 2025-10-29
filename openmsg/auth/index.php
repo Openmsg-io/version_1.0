@@ -22,6 +22,8 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
     }
     
     $self_openmsg_address = $self_openmsg_address_id."*".$my_openmsg_domain;
+	
+    $passcode_hash = hash("sha256", $pass_code.$self_openmsg_address.$other_openmsg_address);
 
 	// Query database to get name of user
     $stmt = $db->prepare("SELECT self_openmsg_address_name FROM openmsg_users WHERE self_openmsg_address = ?");
@@ -81,8 +83,8 @@ function auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openmsg_a
     // JSON data
     $data = 
         array(
-          "receiving_openmsg_address" => $self_openmsg_address_id."*".$my_openmsg_domain, 
-          "pass_code" => $pass_code
+          "receiving_openmsg_address" => $self_openmsg_address, 
+          "passcode_hash" => passcode_hash
        );
     $data = json_encode($data);
     
@@ -163,6 +165,7 @@ $response = auth_check ($db, $self_openmsg_address_id, $pass_code, $other_openms
 echo json_encode($response);  
 
 ?>
+
 
 
 
