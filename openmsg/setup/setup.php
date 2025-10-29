@@ -51,7 +51,7 @@ $stmt->close();
 $query = "CREATE TABLE IF NOT EXISTS openmsg_handshakes (
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 other_openmsg_address VARCHAR(255) NOT NULL,
-pass_code  VARCHAR(6) NOT NULL,
+passcode_hash  CHAR(64) NOT NULL,
 timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )";
 $stmt = $db->prepare($query);
@@ -136,6 +136,7 @@ $stmt->execute(); // To Do: Un-comment
 $stmt->close();
 
 ?>
+
 
 
 
